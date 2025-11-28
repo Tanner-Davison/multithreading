@@ -1,21 +1,48 @@
-#include <algorithm>
 #include <iostream>
-#include <ranges>
+#include <thread>
+#include <vector>
 
-int main() {
+class Person {
 
-  int entered_number;
-  std::cout << "Please enter a number to check its divisibility: ";
-  std::cin >> entered_number;
+public:
+  std::string name;
+  Person(std::string _name) : name(_name) {}
 
-  auto lam = [&entered_number](int &&arg) {
-    auto range = std::views::iota(1, entered_number);
-    return std::count_if(range.begin(), range.end() + 1,
-                         [arg](int i) { return arg % i == 0; });
+  void operator()(int arg) const {
+    std::cout << this->name << " says " << arg << "\n";
   };
 
-  std::cout << entered_number << " has " << lam(std::move(entered_number))
-            << " divisers\n";
+  void operator()(std::string arg) const {
+    std::cout << this->name << " says " << arg << "\n";
+  };
+};
 
+void thread_one() {
+
+  Person abdul{"Abdul"}, bart{"Bart"}, claudia{"Claudia"}, divya{"Divya"};
+  std::vector<Person> persons{abdul, bart, claudia, divya};
+  int count{1};
+
+  while (count <= 20) {
+    for (auto &person : persons) {
+      if (count % 3 == 0 && count % 5 == 0) {
+        person("FizzBuzz!");
+      } else if (count % 3 == 0) {
+        person("Fizz!");
+
+      } else if (count % 5 == 0) {
+        person("Buzz!");
+      } else {
+        person(count);
+      }
+
+      ++count;
+    }
+  }
+}
+
+int main() {
+  std::thread thr1(thread_one);
+  thr1.join();
   return 0;
 }
