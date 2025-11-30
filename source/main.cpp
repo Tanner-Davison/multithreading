@@ -3,7 +3,6 @@
 #include <vector>
 
 class Person {
-
 public:
   std::string name;
   Person(std::string _name) : name(_name) {}
@@ -17,10 +16,7 @@ public:
   };
 };
 
-void thread_one() {
-
-  Person abdul{"Abdul"}, bart{"Bart"}, claudia{"Claudia"}, divya{"Divya"};
-  std::vector<Person> persons{abdul, bart, claudia, divya};
+void thread_one(std::vector<Person> &&persons) {
   int count{1};
 
   while (count <= 20) {
@@ -35,14 +31,15 @@ void thread_one() {
       } else {
         person(count);
       }
-
       ++count;
     }
   }
 }
 
 int main() {
-  std::thread thr1(thread_one);
+  Person abdul{"Abdul"}, bart{"Bart"}, claudia{"Claudia"}, divya{"Divya"};
+  std::vector<Person> persons{abdul, bart, claudia, divya};
+  std::thread thr1(thread_one, std::move(persons));
   thr1.join();
   return 0;
 }
