@@ -62,6 +62,7 @@ int main() {
                   << "\n";
       },
       4, 19);
+  std::cout << "Thread 3's Native handle : " << thr3.get_id() << std::endl;
   thr3.join();
   return 0;
 }
