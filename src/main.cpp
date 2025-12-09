@@ -6,52 +6,32 @@
 #include <thread>
 using namespace std::literals;
 
-void hello() {
-  std::cout << "\nid: " << std::this_thread::get_id() << "\n";
-  try {
-    throw std::exception();
-  } catch (std::exception &e) {
-    std::cout << "Exception Caught! " << e.what() << "\n";
-  }
-  std::cout << "Hello World!\n";
-}
+class Counter {
+private:
+  std::atomic<int> count{0};
 
-void execfast() { std::cout << "\nExecuting fast!" << std::endl; };
-
-std::thread func() {
-  std::thread thr(hello);
-  return thr;
-}
-
-void writeAlot(std::atomic<int> &num) {
-  for (int i = 0; i < 100000; ++i) {
-    ++num;
-  }
+public:
+  void increment() { ++count; }
+  int get() const { return count.load(); }
 };
 
 int main() {
-  // int count = 0;
+  Counter counter;
 
-  // std::thread thr1(writeAlot, std::ref(count));
-  // std::thread thr2(writeAlot, std::ref(count));
-  // std::thread thr3(writeAlot, std::ref(count));
+  auto incrementLots = [&counter]() {
+    for (int i = 0; i < 100000; ++i) {
+      counter.increment();
+    };
+  };
 
-  // thr1.join();
-  // thr2.join();
-  // thr3.join();
-  // std::cout << "\n" << count << "\n";
+  std::thread t1(incrementLots);
+  std::thread t2(incrementLots);
+  std::thread t3(incrementLots);
 
-  std::cout << "\n";
-  for (int run = 0; run < 10; ++run) {
-    std::atomic<int> count = 0;
-    std::thread thr1(writeAlot, std::ref(count));
-    std::thread thr2(writeAlot, std::ref(count));
-    std::thread thr3(writeAlot, std::ref(count));
+  t1.join();
+  t2.join();
+  t3.join();
 
-    thr1.join();
-    thr2.join();
-    thr3.join();
-    std::cout << "Run " << run + 1 << ": " << count << std::endl;
-  }
+  std::cout << "\n" << counter.get() << std::endl;
   return 0;
 }
