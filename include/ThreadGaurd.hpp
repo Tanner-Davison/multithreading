@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 #include <thread>
@@ -11,6 +10,7 @@ public:
 
   ~ThreadGaurd(); // joins thread if joinable()
                   // deleted copy operators to prevent copying
+
   ThreadGaurd(const ThreadGaurd &) = delete;
   ThreadGaurd &operator=(const ThreadGaurd &) = delete;
 };
