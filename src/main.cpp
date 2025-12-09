@@ -1,4 +1,5 @@
 #include "ThreadGaurd.hpp"
+#include <atomic>
 #include <exception>
 #include <functional>
 #include <iostream>
@@ -22,7 +23,7 @@ std::thread func() {
   return thr;
 }
 
-void writeAlot(int &num) {
+void writeAlot(std::atomic<int> &num) {
   for (int i = 0; i < 100000; ++i) {
     ++num;
   }
@@ -42,7 +43,7 @@ int main() {
 
   std::cout << "\n";
   for (int run = 0; run < 10; ++run) {
-    int count = 0;
+    std::atomic<int> count = 0;
     std::thread thr1(writeAlot, std::ref(count));
     std::thread thr2(writeAlot, std::ref(count));
     std::thread thr3(writeAlot, std::ref(count));
