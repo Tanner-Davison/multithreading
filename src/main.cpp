@@ -1,5 +1,6 @@
 #include "ThreadGaurd.hpp"
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <thread>
 using namespace std::literals;
@@ -21,10 +22,35 @@ std::thread func() {
   return thr;
 }
 
+void writeAlot(int &num) {
+  for (int i = 0; i < 100000; ++i) {
+    ++num;
+  }
+};
+
 int main() {
-  std::thread thr(hello);
-  std::cout << "\nid: " << thr.get_id() << "\n";
-  ThreadGaurd thr_one{std::thread(execfast)};
-  ThreadGaurd tgaurd{std::move(thr)};
+  // int count = 0;
+
+  // std::thread thr1(writeAlot, std::ref(count));
+  // std::thread thr2(writeAlot, std::ref(count));
+  // std::thread thr3(writeAlot, std::ref(count));
+
+  // thr1.join();
+  // thr2.join();
+  // thr3.join();
+  // std::cout << "\n" << count << "\n";
+
+  std::cout << "\n";
+  for (int run = 0; run < 10; ++run) {
+    int count = 0;
+    std::thread thr1(writeAlot, std::ref(count));
+    std::thread thr2(writeAlot, std::ref(count));
+    std::thread thr3(writeAlot, std::ref(count));
+
+    thr1.join();
+    thr2.join();
+    thr3.join();
+    std::cout << "Run " << run + 1 << ": " << count << std::endl;
+  }
   return 0;
 }
