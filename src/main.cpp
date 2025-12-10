@@ -10,7 +10,7 @@ using namespace std::literals;
 
 class AtomicCounter {
   private:
-    std::atomic<int> count{0};
+    mutable std::atomic<int> count{0};
 
   public:
     void increment() {
@@ -23,8 +23,8 @@ class AtomicCounter {
 
 class MutexLocker {
   private:
-    int        count = 0;
-    std::mutex task_mtx;
+    mutable int        count = 0;
+    mutable std::mutex task_mtx;
 
   public:
     void increment() {
@@ -37,24 +37,26 @@ class MutexLocker {
 };
 class MutexTryLock {
   private:
-    int              count = 0;
-    std::mutex       mtx_task;
-    std::atomic<int> attempt_unlock_count{0};
+    int                      count = 0;
+    mutable std::timed_mutex mtx_task;
+    mutable std::atomic<int> attempt_unlock_count{0};
 
   public:
     void increment() {
-        while (!mtx_task.try_lock()) {
+        std::unique_lock<std::timed_mutex> lock(mtx_task, std::defer_lock);
+        while (!lock.try_lock_for(500ms)) {
             attempt_unlock_count++;
+            std::this_thread::yield();
         }
         count++;
         mtx_task.unlock();
     }
-    int get() {
-        std::lock_guard<std::mutex> lock(mtx_task);
+    int get() const {
+        std::lock_guard<std::timed_mutex> lock(mtx_task);
         return count;
     }
-    int get_attempts() {
-        std::lock_guard<std::mutex> lock(mtx_task);
+    int get_attempts() const {
+        std::lock_guard<std::timed_mutex> lock(mtx_task);
         return attempt_unlock_count;
     }
 };
