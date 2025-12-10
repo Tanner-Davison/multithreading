@@ -31,6 +31,7 @@ void TestGaurd() {
     std::lock_guard<std::mutex> lock(mtx);
     std::cout << "---TestGuard Finished Execution---" << std::endl;
 }
+
 int main() {
     /* Example of initializing a class with a thread using the move operator */
     std::thread new_thr(TestGaurd);
