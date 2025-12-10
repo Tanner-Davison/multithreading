@@ -11,7 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Source files
 set(SOURCES
     src/main.cpp
-    src/ThreadGaurd.cpp
+    src/ThreadGuard.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -1,104 +1,54 @@
-#include "ThreadGaurd.hpp"
-#include <atomic>
-#include <exception>
+#include "AtomicCounter.hpp"
+#include "MutexLocker.hpp"
+#include "MutexTimedTryLock.hpp"
+#include "ThreadGuard.hpp"
 #include <functional>
 #include <iostream>
-#include <mutex>
+#include <iterator>
 #include <thread>
 
-using namespace std::literals;
+template <typename ThreadCounters>
+void incrementCounters(const std::string& name,
+                       ThreadCounters&    counter,
+                       int                iterations,
+                       int                numThreads) {
+    std::vector<std::thread> threads;
+    for (int i = 0; i < numThreads; ++i) {
+        threads.emplace_back([&counter, iterations]() {
+            for (int j = 0; j < iterations; ++j) {
+                counter.increment();
+            }
+        });
+    };
+    for (auto& t : threads) {
+        t.join();
+    }
+    std::cout << name << " : " << counter.get() << std::endl;
+}
 
-class AtomicCounter {
-  private:
-    mutable std::atomic<int> count{0};
-
-  public:
-    void increment() {
-        ++count;
-    }
-    int get() const {
-        return count.load();
-    }
-};
-
-class MutexLocker {
-  private:
-    mutable int        count = 0;
-    mutable std::mutex task_mtx;
-
-  public:
-    void increment() {
-        std::lock_guard<std::mutex> lock(task_mtx);
-        ++count;
-    }
-    int get() {
-        return count;
-    }
-};
-class MutexTryLock {
-  private:
-    int                      count = 0;
-    mutable std::timed_mutex mtx_task;
-    mutable std::atomic<int> attempt_unlock_count{0};
-
-  public:
-    void increment() {
-        std::unique_lock<std::timed_mutex> lock(mtx_task, std::defer_lock);
-        while (!lock.try_lock_for(500ms)) {
-            attempt_unlock_count++;
-            std::this_thread::yield();
-        }
-        count++;
-        mtx_task.unlock();
-    }
-    int get() const {
-        std::lock_guard<std::timed_mutex> lock(mtx_task);
-        return count;
-    }
-    int get_attempts() const {
-        std::lock_guard<std::timed_mutex> lock(mtx_task);
-        return attempt_unlock_count;
-    }
-};
-
+void TestGaurd() {
+    std::mutex                  mtx;
+    std::lock_guard<std::mutex> lock(mtx);
+    std::cout << "---TestGuard Finished Execution---" << std::endl;
+}
 int main() {
-    AtomicCounter counter;
-    MutexLocker   counter_mtx;
-    MutexTryLock  counter_try;
+    /* Example of initializing a class with a thread using the move operator */
+    std::thread new_thr(TestGaurd);
+    ThreadGuard thr(std::move(new_thr));
 
-    auto AtomicIncrement = [&counter]() {
-        for (int i = 0; i < 100000; ++i) {
-            counter.increment();
-        };
-    };
+    const int ITERATIONS{100000};
+    const int NUMTHREADS{2};
 
-    auto MutextLockerIncrement = [&counter_mtx]() {
-        for (int i = 0; i < 100000; ++i) {
-            counter_mtx.increment();
-        };
-    };
+    AtomicCounter     counter;
+    MutexLocker       counter_mtx_lock;
+    MutexTimedTryLock counter_timed;
 
-    auto MutexTryLockIncrement = [&counter_try]() {
-        for (int i = 0; i < 100000; ++i) {
-            counter_try.increment();
-        };
-    };
-    std::thread t1(AtomicIncrement);
-    std::thread t2(AtomicIncrement);
-    std::thread t3(MutextLockerIncrement);
-    std::thread t4(MutextLockerIncrement);
-    std::thread t5(MutexTryLockIncrement);
-    std::thread t6(MutexTryLockIncrement);
+    incrementCounters("Atomic Counter", counter, ITERATIONS, NUMTHREADS);
+    incrementCounters("MutexLocker", counter_mtx_lock, ITERATIONS, NUMTHREADS);
+    incrementCounters("MutexTryLock", counter_timed, ITERATIONS, NUMTHREADS);
 
-    t1.join();
-    t2.join();
-    std::cout << "\n" << counter.get() << std::endl;
-    t3.join();
-    t4.join();
-    std::cout << "\n" << counter_mtx.get() << std::endl;
-    t5.join();
-    t6.join();
-    std::cout << "\n" << counter_try.get() << std::endl;
-    std::cout << "\n" << counter_try.get_attempts() << std::endl;
+    std::cout << "TryLock Failed Attempts: " << counter_timed.get_attempts()
+              << std::endl;
+
     return 0;
 }
