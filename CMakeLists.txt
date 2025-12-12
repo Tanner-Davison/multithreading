@@ -4,7 +4,7 @@ project(multithreading
         DESCRIPTION "Multithreading Examples"
         LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
@@ -12,6 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SOURCES
     src/main.cpp
     src/ThreadGuard.cpp
+    src/Vector.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

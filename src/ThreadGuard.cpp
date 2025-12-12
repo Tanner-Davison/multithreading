@@ -6,7 +6,7 @@ ThreadGuard::ThreadGuard(std::thread&& p_thr)
     };
 ThreadGuard::~ThreadGuard() {
     if (thr.joinable()) {
-        std::cout << "\nJoining Thread before ThreadGuard goes out of scope!\n";
+        std::cout << "\n---ThreadGuard Destructor Called Join()---\n";
         thr.join();
     }
 };
