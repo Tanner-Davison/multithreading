@@ -1,5 +1,6 @@
 #pragma once
 #include <mutex>
+#include <source_location>
 #include <stdexcept>
 #include <vector>
 
@@ -12,13 +13,17 @@ class VectorPopBackException : public std::runtime_error {
 };
 class InvalidIndexException : public std::out_of_range {
   public:
-    size_t index;
-    size_t size;
+    size_t               index;
+    size_t               size;
+    std::source_location location;
 
-    InvalidIndexException(size_t idx, size_t sz)
-        : std::out_of_range("\n::at() ERROR Index Out of Range!")
+    InvalidIndexException(size_t               idx,
+                          size_t               sz,
+                          std::source_location loc = std::source_location::current())
+        : std::out_of_range("[ERROR][::at()] Index Out of Range!")
         , index(idx)
-        , size(sz) {};
+        , size(sz)
+        , location(loc) {};
 };
 class Vector {
     mutable std::mutex       mtx;

@@ -4,11 +4,13 @@
 #include "MutexUnique.hpp"
 #include "ThreadGuard.hpp"
 #include "Vector.hpp"
-#include <functional>
 #include <iostream>
-#include <iterator>
 #include <print>
 #include <thread>
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define RESET "\033[0m"
 
 template <typename ThreadCounters>
 void incrementCounters(const std::string& name,
@@ -16,6 +18,7 @@ void incrementCounters(const std::string& name,
                        int                iterations,
                        int                numThreads) {
     std::vector<std::thread> threads;
+
     for (int i = 0; i < numThreads; ++i) {
         threads.emplace_back([&counter, iterations]() {
             for (int j = 0; j < iterations; ++j) {
@@ -26,13 +29,14 @@ void incrementCounters(const std::string& name,
     for (auto& t : threads) {
         t.join();
     }
-    std::cout << name << " : " << counter.get() << " Counts" << std::endl;
+    std::println("{:<15} {:>10}", name, counter.get());
 }
-
 void TestGaurd() {
     std::mutex                  mtx;
     std::lock_guard<std::mutex> lock(mtx);
-    std::cout << "\n\n---TestGuard Finished Execution---\n" << std::endl;
+    std::cout << "\n\n---TestGuard Finished "
+                 "Execution---\n"
+              << std::endl;
 }
 
 int main() {
@@ -43,17 +47,18 @@ int main() {
     const int   ITERATIONS{100000};
     const int   NUMTHREADS{2};
 
-    AtomicCounter     atomic_counter;
-    MutexLocker       mutex_counter;
-    MutexTimedTryLock timed_mutex_lock;
-    MutexUnique       unique_mtx_counter;
+    AtomicCounter     atomic_lck;
+    MutexLocker       lck_guard;
+    MutexTimedTryLock time_lock;
+    MutexUnique       unique_lck;
 
-    incrementCounters("Atomic Counter", atomic_counter, ITERATIONS, NUMTHREADS);
-    incrementCounters("Mutex  Locker", mutex_counter, ITERATIONS, NUMTHREADS);
-    incrementCounters(
-        "Mutex Timed Lock", timed_mutex_lock, ITERATIONS, NUMTHREADS);
-    incrementCounters(
-        "Unique Mutex Lock", unique_mtx_counter, ITERATIONS, NUMTHREADS);
+    std::println("{:<15} {:>10}", "Name", "Count");
+    incrementCounters("Atomic_counter", atomic_lck, ITERATIONS, NUMTHREADS);
+    incrementCounters("Lock_guard", lck_guard, ITERATIONS, NUMTHREADS);
+    incrementCounters("Time_lock", time_lock, ITERATIONS, NUMTHREADS);
+    std::println("Timed attempts: {}", time_lock.get_attempts());
+    incrementCounters("Unique_lock", unique_lck, ITERATIONS, NUMTHREADS);
+
     try {
         std::cout << my_vec.pop_back() << std::endl;
     } catch (std::exception& e) {
@@ -69,10 +74,19 @@ int main() {
         std::cout << my_vec.at(39) << std::endl;
 
     } catch (InvalidIndexException& e) {
-        std::cout << "\n---******-----" << e.what()
-                  << "\nAttempted index: " << e.index
-                  << "\nvector size: " << e.size << "\n---****------"
-                  << std::endl;
+        std::println("\n\033[1;31m{}\033[0m", e.what());
+        std::println("{}::at({}{}{}{}{}) > vector size:{}{}{}{}",
+                     YELLOW,
+                     RESET,
+                     RED,
+                     e.index,
+                     RESET,
+                     YELLOW,
+                     RESET,
+                     GREEN,
+                     e.size,
+                     RESET);
+        std::println("{}{}::@Line:{}{}", YELLOW, e.location.file_name(), e.location.line(), RESET);
     }
 
     return 0;
