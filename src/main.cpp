@@ -1,8 +1,9 @@
 #include "AtomicCounter.hpp"
 #include "MutexLocker.hpp"
-#include "MutexTimedTryLock.hpp"
 #include "MutexUnique.hpp"
 #include "ThreadGuard.hpp"
+#include "TryLockFor.hpp"
+#include "TryLockUntil.hpp"
 #include "Vector.hpp"
 #include <iostream>
 #include <print>
@@ -63,17 +64,22 @@ int main() {
     const int ITERATIONS{100000};
     const int NUMTHREADS{2};
 
-    AtomicCounter     atomic_lck;
-    MutexLocker       lck_guard;
-    MutexTimedTryLock time_lock;
-    MutexUnique       unique_lck;
+    AtomicCounter atomic_lck;
+    MutexLocker   lck_guard;
+    TryLockFor    try_lock_for;
+    MutexUnique   unique_lck;
+    TryLockUntil  try_lock_until;
 
     std::println("{:<15} {:>10}", "Name", "Count");
     incrementCounters("Atomic_counter", atomic_lck, ITERATIONS, NUMTHREADS);
     incrementCounters("Lock_guard", lck_guard, ITERATIONS, NUMTHREADS);
-    incrementCounters("Time_lock", time_lock, ITERATIONS, NUMTHREADS);
-    std::println("Timed attempts: {}", time_lock.get_attempts());
     incrementCounters("Unique_lock", unique_lck, ITERATIONS, NUMTHREADS);
+    incrementCounters("try_lock_for", try_lock_for, ITERATIONS, NUMTHREADS);
+    std::println(
+        "{}{:<15}{:>10}{}", GREEN, "  └─ retries", try_lock_for.get_failed_lock_count(), RESET);
+    incrementCounters("try_lock_until", try_lock_until, ITERATIONS, NUMTHREADS);
+    std::println(
+        "{}{:<15}{:>10}{}", GREEN, "  └─ retries", try_lock_until.get_failed_lock_count(), RESET);
 
     try {
         std::cout << my_vec.pop_back() << std::endl;
@@ -109,6 +115,7 @@ int main() {
 
     std::thread rthr1(bad_factorial, 10);
     std::thread rthr2(bad_factorial, 11);
+
     rthr1.join();
     rthr2.join();
     return 0;

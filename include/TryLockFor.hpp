@@ -3,28 +3,28 @@
 #include <thread>
 
 using namespace std::literals;
-class MutexTimedTryLock {
+class TryLockFor {
   private:
     int                      count = 0;
     mutable std::timed_mutex mtx_task;
-    mutable std::atomic<int> attempt_unlock_count{0};
+    mutable std::atomic<int> failed_lock_attempts{0};
 
   public:
     void increment() {
         std::unique_lock<std::timed_mutex> lock(mtx_task, std::defer_lock);
-        while (!lock.try_lock_for(5ms)) {
-            ++attempt_unlock_count;
+        while (!lock.try_lock_for(1us)) {
+            ++failed_lock_attempts;
             std::this_thread::yield();
         }
+
         count++;
-        mtx_task.unlock();
     }
     int get() const {
         std::lock_guard<std::timed_mutex> lock(mtx_task);
         return count;
     }
-    int get_attempts() const {
+    int get_failed_lock_count() const {
         std::lock_guard<std::timed_mutex> lock(mtx_task);
-        return attempt_unlock_count;
+        return failed_lock_attempts;
     }
 };
