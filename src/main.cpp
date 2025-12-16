@@ -58,9 +58,10 @@ int main() {
     Vector      my_vec;
     std::thread new_thr(TestGaurd);
     ThreadGuard thr(std::move(new_thr));
-    int         myint{34};
-    const int   ITERATIONS{100000};
-    const int   NUMTHREADS{2};
+
+    int       myint{34};
+    const int ITERATIONS{100000};
+    const int NUMTHREADS{2};
 
     AtomicCounter     atomic_lck;
     MutexLocker       lck_guard;
@@ -105,6 +106,10 @@ int main() {
     }
 
     std::println("");
-    bad_factorial(12);
+
+    std::thread rthr1(bad_factorial, 10);
+    std::thread rthr2(bad_factorial, 11);
+    rthr1.join();
+    rthr2.join();
     return 0;
 }
