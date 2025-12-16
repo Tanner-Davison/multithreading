@@ -12,6 +12,8 @@
 #define YELLOW "\033[1;33m"
 #define RESET "\033[0m"
 
+std::recursive_mutex rmut; // used in bad_factorial;
+
 template <typename ThreadCounters>
 void incrementCounters(const std::string& name,
                        ThreadCounters&    counter,
@@ -37,6 +39,19 @@ void TestGaurd() {
     std::cout << "\n\n---TestGuard Finished "
                  "Execution---\n"
               << std::endl;
+}
+
+int bad_factorial(int n) {
+    if (n <= 1) {
+        std::println("Returning {}", 1);
+        return 1;
+    }
+    std::lock_guard<std::recursive_mutex> lck(rmut);
+    // Start of Critical Section
+    int retval = n * bad_factorial(n - 1);
+    std::println("Returning {}", retval);
+    // End of Critical Section
+    return retval;
 }
 
 int main() {
@@ -89,5 +104,7 @@ int main() {
         std::println("{}{}::@Line:{}{}", YELLOW, e.location.file_name(), e.location.line(), RESET);
     }
 
+    std::println("");
+    bad_factorial(12);
     return 0;
 }
