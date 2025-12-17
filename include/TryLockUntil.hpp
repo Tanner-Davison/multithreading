@@ -32,4 +32,8 @@ class TryLockUntil {
         std::lock_guard<std::timed_mutex> lock(mtx_task);
         return failed_lock_count;
     }
+
+    // Use this in main
+    // std::println(
+    //     "{}{:<15}{:>10}{}", GREEN, "  └─ retries", try_lock_until.get_failed_lock_count(),
 };
