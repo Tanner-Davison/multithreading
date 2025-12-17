@@ -12,7 +12,6 @@ class TryLockUntil {
     int                      count{0};
     mutable std::timed_mutex mtx_task;
     std::atomic<int>         failed_lock_count{0};
-    // mutable std::atomic<int> attempt_unlock_count{0};
 
   public:
     void increment() {

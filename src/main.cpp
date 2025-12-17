@@ -34,13 +34,6 @@ void incrementCounters(const std::string& name,
     }
     std::println("{:<15} {:>10}", name, counter.get());
 }
-void TestGaurd() {
-    std::mutex                  mtx;
-    std::lock_guard<std::mutex> lock(mtx);
-    std::cout << "\n\n---TestGuard Finished "
-                 "Execution---\n"
-              << std::endl;
-}
 
 int bad_factorial(int n) {
     if (n <= 1) {
@@ -56,11 +49,8 @@ int bad_factorial(int n) {
 }
 
 int main() {
-    Vector      my_vec;
-    std::thread new_thr(TestGaurd);
-    ThreadGuard thr(std::move(new_thr));
+    Vector my_vec;
 
-    int       myint{34};
     const int ITERATIONS{100000};
     const int NUMTHREADS{2};
 
@@ -81,42 +71,5 @@ int main() {
     std::println(
         "{}{:<15}{:>10}{}", GREEN, "  └─ retries", try_lock_until.get_failed_lock_count(), RESET);
 
-    try {
-        std::cout << my_vec.pop_back() << std::endl;
-    } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
-    };
-
-    for (int i = 0; i < 20 + 1; ++i) {
-        my_vec.push_back(i);
-    }
-    my_vec.read_vec();
-
-    try {
-        std::cout << my_vec.at(39) << std::endl;
-
-    } catch (InvalidIndexException& e) {
-        std::println("\n\033[1;31m{}\033[0m", e.what());
-        std::println("{}::at({}{}{}{}{}) > vector size:{}{}{}{}",
-                     YELLOW,
-                     RESET,
-                     RED,
-                     e.index,
-                     RESET,
-                     YELLOW,
-                     RESET,
-                     GREEN,
-                     e.size,
-                     RESET);
-        std::println("{}{}::@Line:{}{}", YELLOW, e.location.file_name(), e.location.line(), RESET);
-    }
-
-    std::println("");
-
-    std::thread rthr1(bad_factorial, 10);
-    std::thread rthr2(bad_factorial, 11);
-
-    rthr1.join();
-    rthr2.join();
     return 0;
 }
