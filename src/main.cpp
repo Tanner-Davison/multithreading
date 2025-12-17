@@ -2,13 +2,10 @@
 #include "IncrementCounters.hpp"
 #include "MutexLocker.hpp"
 #include "MutexUnique.hpp"
-#include "ThreadGuard.hpp"
 #include "TryLockFor.hpp"
 #include "TryLockUntil.hpp"
 #include "Vector.hpp"
-#include "bad_factorial.hpp"
 #include <print>
-#include <thread>
 #define RED "\033[1;31m"
 #define GREEN "\033[1;32m"
 #define YELLOW "\033[1;33m"
@@ -26,7 +23,7 @@ int main() {
     MutexUnique   unique_lck;
     TryLockUntil  try_lock_until;
 
-    std::println("{:<15} {:>10}", "Name", "Count");
+    std::println("{:<15} {:>10}", "Name:", "Count:");
     IncrementCounters("Atomic_counter", atomic_lck, ITERATIONS, NUMTHREADS);
     IncrementCounters("Lock_guard", lck_guard, ITERATIONS, NUMTHREADS);
     IncrementCounters("Unique_lock", unique_lck, ITERATIONS, NUMTHREADS);
