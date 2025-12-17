@@ -13,6 +13,7 @@ set(SOURCES
     src/main.cpp
     src/ThreadGuard.cpp
     src/Vector.cpp
+    src/bad_factorial.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
