@@ -1,4 +1,3 @@
-#include "MutexUnique.hpp"
 #include <chrono>
 #include <iostream>
 #include <mutex>
@@ -9,30 +8,29 @@
 
 using namespace std::literals;
 
-std::mutex        mut;
 std::shared_mutex shmut;
 
-int                         x{0};
-std::pair<std::string, int> p("Initial", 0);
+std::pair<int, int> p(0, 0);
 
 void write() {
     std::lock_guard<std::shared_mutex> lck_guard(shmut); // exclusive locking
-    p.first = "Modified";
-    ++p.second;
+    ++p.first;
 }
 void read() {
-    // std::shared_lock lock_guard(shmut); // shared locking example
-    std::string temp = p.first;
+    std::shared_lock lock_guard(shmut); // shared mutex (shmut)
     std::this_thread::sleep_for(1us);
-    std::println("{} : {} ", temp, p.second);
+    std::println("Reading: {}", p.first);
+    std::cout.flush();
 }
 
 int main() {
+    std::println("");
     auto start = std::chrono::steady_clock::now();
 
     std::vector<std::thread> threads;
     for (int i = 0; i < 20; ++i) {
         threads.push_back(std::thread(read));
+        ++p.second;
     }
 
     threads.push_back(std::thread(write));
@@ -40,7 +38,9 @@ int main() {
 
     for (int i = 0; i < 20; ++i) {
         threads.push_back(std::thread(read));
+        ++p.second;
     }
+
     for (auto& thr : threads) {
         thr.join();
     }
@@ -48,7 +48,7 @@ int main() {
     auto end      = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    std::cout << "Total execution time: " << duration.count() << "ms\n";
+    std::println(" Total Execution time: {}ms", duration.count());
 
     return 0;
 }
