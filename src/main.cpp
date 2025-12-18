@@ -34,7 +34,6 @@ int main() {
         threads.emplace_back(read);
     }
 
-    std::println("elapsed_time: {}ms", runtime.elapsed_time());
     threads.emplace_back(write);
     threads.emplace_back(write);
     for (auto& thr : threads) {
