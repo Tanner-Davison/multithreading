@@ -25,6 +25,7 @@
  */
 #pragma once
 #include <chrono>
+#include <mutex>
 #include <print>
 #include <string_view>
 #include <unordered_map>
@@ -32,8 +33,10 @@
 // Multiton Pattern
 class RuntimeSpeed {
     inline static std::unordered_map<std::string, std::unique_ptr<RuntimeSpeed>> profilers;
-    std::chrono::steady_clock::time_point                                        start;
-    std::string_view                                                             label;
+    inline static std::mutex                                                     profilers_mutex;
+
+    std::chrono::steady_clock::time_point start;
+    std::string_view                      label;
 
     RuntimeSpeed(std::string_view label = "Execution")
         : start(std::chrono::steady_clock::now())
@@ -57,8 +60,8 @@ class RuntimeSpeed {
         return elapsed;
     }
     static RuntimeSpeed& getProfiler(std::string_view name = "Execution") {
-        std::string key(name);
-
+        std::lock_guard<std::mutex> lock(profilers_mutex);
+        std::string                 key(name);
         if (!profilers.contains(key)) {
             profilers[key] = std::unique_ptr<RuntimeSpeed>(new RuntimeSpeed(name));
         }
