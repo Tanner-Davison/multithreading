@@ -1,3 +1,4 @@
+#include "RuntimeSpeed.hpp"
 #include <atomic>
 #include <chrono>
 #include <mutex>
@@ -25,7 +26,7 @@ void read() {
 }
 
 int main() {
-    auto                     start = std::chrono::steady_clock::now();
+    RuntimeSpeed             runtime("Main Thread");
     std::vector<std::thread> threads;
 
     std::println("");
@@ -33,17 +34,13 @@ int main() {
         threads.emplace_back(read);
     }
 
+    std::println("elapsed_time: {}ms", runtime.elapsed_time());
     threads.emplace_back(write);
     threads.emplace_back(write);
-
     for (auto& thr : threads) {
         thr.join();
     }
 
-    auto end      = std::chrono::steady_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
     std::println("Final value: {}", shared_data);
     std::println("Readers completed: {}", reader_count.load());
-    std::println("Total Execution time: {}ms", duration.count());
 }
