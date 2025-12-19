@@ -1,3 +1,4 @@
+#include "Logger.hpp"
 #include "RuntimeSpeed.hpp"
 #include "Singleton.hpp"
 #include <atomic>
@@ -5,6 +6,7 @@
 #include <print>
 #include <random>
 #include <shared_mutex>
+#include <string_view>
 #include <thread>
 #include <vector>
 using namespace std::literals;
