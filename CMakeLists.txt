@@ -19,6 +19,9 @@ set(SOURCES
     src/ThreadGuard.cpp
     src/Vector.cpp
     src/bad_factorial.cpp
+    src/shared_mutex_example.cpp
+    src/singleton_example.cpp
+    src/thread_local_example.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
