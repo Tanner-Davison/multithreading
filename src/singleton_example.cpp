@@ -10,6 +10,7 @@ int THREADS{5};
 void task() {
     Singleton& single = Singleton::get_instance();
     std::println("{}", static_cast<void*>(&single));
+    // std::cout << &single << std::endl; (also works);
 }
 void run_demo() {
     std::println("=== Singleton Example ===");
