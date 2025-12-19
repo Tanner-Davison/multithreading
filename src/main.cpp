@@ -3,15 +3,16 @@
 #include <atomic>
 #include <mutex>
 #include <print>
+#include <random>
 #include <shared_mutex>
 #include <thread>
 #include <vector>
 using namespace std::literals;
 
-std::shared_mutex shmut;
-std::atomic<int>  reader_count{0};
-
-int shared_data = 0;
+int                       shared_data = 0;
+std::shared_mutex         shmut;
+std::atomic<int>          reader_count{0};
+thread_local std::mt19937 mt;
 
 void write() {
     std::lock_guard lock(shmut);
@@ -27,9 +28,15 @@ void task() {
     Singleton& single = Singleton::get_instance();
     std::println("{}", static_cast<void*>(&single));
 }
+void func() {
+    std::uniform_real_distribution<double> dist(0, 1);
+    for (int i = 0; i < 10; ++i) {
+        std::println("{}", dist(mt));
+    }
+}
 
 int main() {
-    auto&                    mainloop = RuntimeSpeed::getProfiler("Main Thread");
+    RuntimeSpeed&            mainloop = RuntimeSpeed::getProfiler("Main Thread");
     std::vector<std::thread> threads;
     std::this_thread::sleep_for(1000ms);
     {
@@ -51,6 +58,13 @@ int main() {
         for (auto& t : threads) {
             t.join();
         }
+    }
+    threads.clear();
+    for (int i = 0; i < 2; ++i) {
+        threads.emplace_back(func);
+    }
+    for (auto& t : threads) {
+        t.join();
     }
 
     std::println("Final shared_data value: {}", shared_data);
