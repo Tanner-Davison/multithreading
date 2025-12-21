@@ -31,14 +31,16 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_compile_options(-fsanitize=address -g -O1)
+add_link_options(-fsanitize=address)
 # Compiler-specific flags
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    add_compile_options(-fsanitize=thread -g -O1)
-    add_link_options(-fsanitize=thread)
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    add_compile_options(-fsanitize=thread -g -O1)
-    add_link_options(-fsanitize=thread)
-endif()
+# if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#     add_compile_options(-fsanitize=thread -g -O1)
+#     add_link_options(-fsanitize=thread)
+# elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#     add_compile_options(-fsanitize=thread -g -O1)
+#     add_link_options(-fsanitize=thread)
+# endif()
 
 # Source files
 set(SOURCES
