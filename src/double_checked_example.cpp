@@ -5,11 +5,11 @@
 
 namespace double_checked_locking {
 namespace {
-LazyInit*      ptest = nullptr;
-std::once_flag ptest_flag;
+std::unique_ptr<LazyInit> ptest;
+std::once_flag            ptest_flag;
 
 void process() {
-    std::call_once(ptest_flag, []() { ptest = new LazyInit; });
+    std::call_once(ptest_flag, []() { ptest = std::make_unique<LazyInit>(); });
     ptest->func();
 }
 } // namespace

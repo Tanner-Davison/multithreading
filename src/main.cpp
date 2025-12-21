@@ -1,4 +1,6 @@
 #include "RuntimeSpeed.hpp"
+#include <print>
+
 namespace shared_mutex_example {
 void run_demo();
 }
@@ -14,13 +16,18 @@ int run_bad_factorial();
 namespace double_checked_locking {
 void run_demo();
 }
+namespace deadlock_example {
+void run_philosophers();
+}
 
 int main() {
-    RuntimeSpeed& mainloop = RuntimeSpeed::getProfiler("Main Thread");
+    // RuntimeSpeed& mainloop = RuntimeSpeed::getProfiler("Main Thread");
     // thread_local_example::run_demo();
     // singleton_example::run_demo();
     // shared_mutex_example::run_demo();
     // recursive_mutex_example::run_bad_factorial();
-    double_checked_locking::run_demo();
+    // double_checked_locking::run_demo();
+    // deadlock_example::run_demo();
+    deadlock_example::run_philosophers();
     return 0;
 }

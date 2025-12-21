@@ -23,6 +23,7 @@ set(SOURCES
     src/singleton_example.cpp
     src/thread_local_example.cpp
     src/double_checked_example.cpp
+    src/deadlock_example.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
