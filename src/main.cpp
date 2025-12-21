@@ -21,7 +21,7 @@ void run_philosophers();
 }
 
 int main() {
-    // RuntimeSpeed& mainloop = RuntimeSpeed::getProfiler("Main Thread");
+    RuntimeSpeed& mainloop = RuntimeSpeed::getProfiler("Main Thread");
     // thread_local_example::run_demo();
     // singleton_example::run_demo();
     // shared_mutex_example::run_demo();
