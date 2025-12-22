@@ -14,14 +14,16 @@ namespace recursive_mutex_example {
 int run_bad_factorial();
 }
 namespace double_checked_locking {
-void run_demo();
-}
+void run_safer_call_once();
+void run_double_check_demo();
+} // namespace double_checked_locking
 namespace deadlock_example {
 void run_philosophers();
 }
 namespace pre_seventeen_deadlock_example {
 void run_demo();
 void run_demo_using_defer();
+void run_try_lock_demo();
 } // namespace pre_seventeen_deadlock_example
 
 int main() {
@@ -31,9 +33,11 @@ int main() {
     // shared_mutex_example::run_demo();
     // recursive_mutex_example::run_bad_factorial();
     // double_checked_locking::run_demo();
+    double_checked_locking::run_double_check_demo();
     // deadlock_example::run_demo();
     // deadlock_example::run_philosophers();
     // pre_seventeen_deadlock_example::run_demo();
-    pre_seventeen_deadlock_example::run_demo_using_defer();
+    // pre_seventeen_deadlock_example::run_demo_using_defer();
+    // pre_seventeen_deadlock_example::run_try_lock_demo();
     return 0;
 }
