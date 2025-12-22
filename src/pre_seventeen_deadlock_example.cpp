@@ -23,6 +23,7 @@ void taskB() {
 }
 void deferTaskA() {
     std::println("doing some prep work for 50ms...");
+
     std::this_thread::sleep_for(50ms);
     std::unique_lock<std::mutex> lock(mtxA, std::defer_lock);
     std::unique_lock<std::mutex> lock2(mtxB, std::defer_lock);
