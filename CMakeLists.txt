@@ -53,6 +53,7 @@ set(SOURCES
     src/thread_local_example.cpp
     src/double_checked_example.cpp
     src/deadlock_example.cpp
+    src/pre_seventeen_deadlock_example.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
