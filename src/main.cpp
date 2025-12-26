@@ -27,7 +27,7 @@ void run_try_lock_demo();
 } // namespace pre_seventeen_deadlock_example
 
 int main() {
-    RuntimeSpeed& mainloop = RuntimeSpeed::getProfiler("Main Thread");
+    RuntimeSpeed::getProfiler("Main Thread");
     // thread_local_example::run_demo();
     // singleton_example::run_demo();
     // shared_mutex_example::run_demo();
