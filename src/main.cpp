@@ -28,7 +28,7 @@ void run_try_lock_demo();
 
 int main() {
     RuntimeSpeed::getProfiler("Main Thread");
-    // thread_local_example::run_demo();
+    thread_local_example::run_demo();
     // singleton_example::run_demo();
     // shared_mutex_example::run_demo();
     // recursive_mutex_example::run_bad_factorial();
