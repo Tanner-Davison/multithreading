@@ -27,17 +27,17 @@ void run_try_lock_demo();
 } // namespace pre_seventeen_deadlock_example
 
 int main() {
-    RuntimeSpeed::getProfiler("Main Thread");
-    thread_local_example::run_demo();
-    singleton_example::run_demo();
-    shared_mutex_example::run_demo();
-    recursive_mutex_example::run_bad_factorial();
-    double_checked_locking::run_double_check_demo();
-    double_checked_locking::run_double_check_demo();
+    // RuntimeSpeed::getProfiler("Main Thread");
+    // thread_local_example::run_demo();
+    // singleton_example::run_demo();
+    // shared_mutex_example::run_demo();
+    // recursive_mutex_example::run_bad_factorial();
+    // double_checked_locking::run_double_check_demo();
+    // double_checked_locking::run_double_check_demo();
     deadlock_example::run_philosophers();
-    pre_seventeen_deadlock_example::run_demo();
-    pre_seventeen_deadlock_example::run_demo_using_defer();
-    pre_seventeen_deadlock_example::run_try_lock_demo();
+    // pre_seventeen_deadlock_example::run_demo();
+    // pre_seventeen_deadlock_example::run_demo_using_defer();
+    // pre_seventeen_deadlock_example::run_try_lock_demo();
 
     return 0;
 }
