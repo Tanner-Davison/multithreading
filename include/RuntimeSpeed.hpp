@@ -23,6 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 #pragma once
 #include <chrono>
 #include <mutex>
@@ -42,6 +43,7 @@ class RuntimeSpeed {
         : start(std::chrono::steady_clock::now())
         , label(label) {}
 
+    /*deleting all copy and assaginment overloads */
     RuntimeSpeed(const RuntimeSpeed&)            = delete;
     RuntimeSpeed& operator=(const RuntimeSpeed&) = delete;
     RuntimeSpeed(RuntimeSpeed&&)                 = delete;
