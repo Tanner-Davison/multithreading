@@ -19,7 +19,8 @@ void run_double_check_demo();
 } // namespace double_checked_locking
 namespace deadlock_example {
 void run_philosophers();
-}
+void run_with_deadlock();
+} // namespace deadlock_example
 namespace pre_seventeen_deadlock_example {
 void run_demo();
 void run_demo_using_defer();
@@ -35,6 +36,7 @@ int main() {
     // double_checked_locking::run_double_check_demo();
     // double_checked_locking::run_double_check_demo();
     deadlock_example::run_philosophers();
+    // deadlock_example::run_with_deadlock();
     // pre_seventeen_deadlock_example::run_demo();
     // pre_seventeen_deadlock_example::run_demo_using_defer();
     // pre_seventeen_deadlock_example::run_try_lock_demo();
