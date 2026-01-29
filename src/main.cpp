@@ -19,7 +19,8 @@ void run_double_check_demo();
 } // namespace double_checked_locking
 namespace deadlock_example {
 void run_philosophers();
-void run_with_deadlock();
+void run_with_deadlock(); // WARN: running with deadlock will run forever
+
 } // namespace deadlock_example
 namespace pre_seventeen_deadlock_example {
 void run_demo();
