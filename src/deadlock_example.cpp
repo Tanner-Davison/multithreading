@@ -26,7 +26,7 @@ namespace {
 bool                             selfish_starter{false};
 constexpr int                    n_forks                   = 5;
 constexpr int                    n_philosophers            = n_forks;
-constexpr std::string            names[n_philosophers]     = {"A", "B", "C", "D", "E"};
+constexpr std::string_view       names[n_philosophers]     = {"A", "B", "C", "D", "E"};
 constexpr auto                   think_time                = 100ms;
 constexpr auto                   eat_time                  = 50ms;
 int                              mouthfuls[n_philosophers] = {0};
@@ -86,6 +86,7 @@ void dine(int n_philo, bool showDeadLock = false) {
 }
 } // namespace
 
+// 2 AVAIABLE FUNCTIONS TO CALL FROM MAIN
 void run_philosophers() {
     std::vector<std::thread> table;
     table.reserve(n_philosophers);
@@ -101,6 +102,7 @@ void run_philosophers() {
         see_results(philo, "ate", mouthfuls[philo], position);
     }
 }
+
 void run_with_deadlock() {
     std::vector<std::thread> table;
     table.reserve(n_philosophers);
