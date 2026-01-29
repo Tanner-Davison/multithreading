@@ -35,8 +35,8 @@ int main() {
     // recursive_mutex_example::run_bad_factorial();
     // double_checked_locking::run_double_check_demo();
     // double_checked_locking::run_double_check_demo();
-    deadlock_example::run_philosophers();
-    // deadlock_example::run_with_deadlock();
+    // deadlock_example::run_philosophers();
+    deadlock_example::run_with_deadlock();
     // pre_seventeen_deadlock_example::run_demo();
     // pre_seventeen_deadlock_example::run_demo_using_defer();
     // pre_seventeen_deadlock_example::run_try_lock_demo();

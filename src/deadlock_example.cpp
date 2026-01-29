@@ -84,7 +84,6 @@ void dine(int n_philo, bool showDeadLock = false) {
     {
         std::lock_guard lock(position_mutex);
         finished_positions.emplace_back(n_philo, ++position);
-
         mouthfuls[n_philo] += 1;
     }
 
