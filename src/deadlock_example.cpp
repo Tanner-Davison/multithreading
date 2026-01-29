@@ -23,7 +23,7 @@ namespace {
  * preventing the circular wait condition that causes deadlock.
  */
 
-bool                             selfish_starter{false};
+std::atomic<bool>                selfish_starter{false};
 constexpr int                    n_forks                   = 5;
 constexpr int                    n_philosophers            = n_forks;
 constexpr std::string_view       names[n_philosophers]     = {"A", "B", "C", "D", "E"};
@@ -33,7 +33,9 @@ int                              mouthfuls[n_philosophers] = {0};
 std::vector<std::pair<int, int>> finished_positions;
 constexpr std::string_view       ordinals[] = {"", "1st", "2nd", "3rd", "4th", "5th"};
 int                              position{0};
-std::mutex                       fork_mutex[n_forks];
+
+std::mutex fork_mutex[n_forks];
+std::mutex position_mutex;
 
 void print(int n_id, const std::string& str, int forkno, int forknotwo) {
     std::println(
@@ -69,8 +71,7 @@ void dine(int n_philo, bool showDeadLock = false) {
         // Prevent deadlock with --atomic acquisition--
         std::scoped_lock lock_fork(fork_mutex[left_fork], fork_mutex[right_fork]);
 
-        if (!selfish_starter) {
-            selfish_starter = true;
+        if (!selfish_starter.exchange(true)) {
             print(n_philo, "Selfishly starts first & Picks up forks ", left_fork, right_fork);
         } else {
             print(n_philo, "Picks up both forks numbered ", left_fork, right_fork);
@@ -80,9 +81,14 @@ void dine(int n_philo, bool showDeadLock = false) {
         // lock releases here
     }
 
-    finished_positions.emplace_back(n_philo, ++position);
+    {
+        std::lock_guard lock(position_mutex);
+        finished_positions.emplace_back(n_philo, ++position);
+
+        mouthfuls[n_philo] += 1;
+    }
+
     std::this_thread::sleep_for(think_time);
-    mouthfuls[n_philo] += 1;
 }
 } // namespace
 
