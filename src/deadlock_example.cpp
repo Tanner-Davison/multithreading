@@ -15,9 +15,9 @@ namespace {
  * multiple mutexes to avoid the classic deadlock scenario.
  *
  * Classic deadlock occurs when:
- * - Each philosopher grabs their left fork first
- * - Then tries to grab their right fork
- * - All 5 philosophers grab left forks simultaneously → DEADLOCK
+ * -- Each philosopher grabs their left fork first
+ * -- Then tries to grab their right fork
+ * -- All 5 philosophers grab left forks simultaneously → DEADLOCK
  *
  * Prevention: std::scoped_lock acquires BOTH mutexes atomically,
  * preventing the circular wait condition that causes deadlock.
@@ -37,13 +37,14 @@ int                              position{0};
 std::mutex fork_mutex[n_forks];
 std::mutex position_mutex;
 
-void print(int n_id, const std::string& str, int forkno, int forknotwo) {
-    std::println(
-        "Philosopher {} {} {}, {} and starts eating!", names[n_id], str, forkno, forknotwo);
+void print(int n_id, const std::string& str, int forkNo, int forkNo2) {
+    std::println("Philosopher {} {} {}, {} and starts eating!", names[n_id], str, forkNo, forkNo2);
 }
+
 void print(int n_id, const std::string& str) {
     std::println("Philosopher {} {}", names[n_id], str);
 }
+
 void see_results(int n_id, const std::string& str, int mouthfuls, int position) {
     std::println("{} {} {} time{} finished in {} place.",
                  names[n_id],
@@ -52,6 +53,7 @@ void see_results(int n_id, const std::string& str, int mouthfuls, int position) 
                  mouthfuls == 1 ? "" : "s",
                  ordinals[position]);
 }
+
 void dine(int n_philo, bool showDeadLock = false) {
     int left_fork{n_philo};
     int right_fork{(n_philo + 1) % n_forks};
@@ -107,6 +109,7 @@ void run_philosophers() {
         see_results(philo, "ate", mouthfuls[philo], position);
     }
 }
+
 //  WARNING: This function will deadlock and hang forever!
 //  Use Ctrl+C to terminate if you run this.
 void run_with_deadlock() {
