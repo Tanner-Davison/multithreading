@@ -107,7 +107,8 @@ void run_philosophers() {
         see_results(philo, "ate", mouthfuls[philo], position);
     }
 }
-
+//  WARNING: This function will deadlock and hang forever!
+//  Use Ctrl+C to terminate if you run this.
 void run_with_deadlock() {
     std::vector<std::thread> table;
     table.reserve(n_philosophers);
