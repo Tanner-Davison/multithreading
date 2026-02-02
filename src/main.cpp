@@ -22,6 +22,7 @@ void run_philosophers();
 void run_with_deadlock(); // WARN: running with deadlock will run forever
 
 } // namespace deadlock_example
+//
 namespace pre_seventeen_deadlock_example {
 void run_demo();
 void run_demo_using_defer();
