@@ -3,6 +3,9 @@
 #include <thread>
 #include <vector>
 
+// This file demonstrates a BAD factorial implementation that misuses mutexes.
+// Key problems: unnecessary locking for pure computation, forces sequential
+// execution in multithreaded context, and defeats parallelism entirely.
 namespace recursive_mutex_example {
 
 namespace {
