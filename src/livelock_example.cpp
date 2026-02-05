@@ -60,6 +60,7 @@ void run_livelock_demo() {
 }
 void run_livelock_eternal_conversation() {
     std::thread thrC(funcC);
+    thrC.native_handle();
     std::this_thread::sleep_for(10ms); // Artificially creates the race condition
     std::thread thrD(funcD);
 
