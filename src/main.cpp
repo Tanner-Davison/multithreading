@@ -19,7 +19,7 @@ void run_double_check_demo();
 
 namespace deadlock_example {
 void run_philosophers();
-void run_with_deadlock(); // WARN: running with deadlock will run forever
+void run_with_deadlock(); // WARN: runs forever
 } // namespace deadlock_example
 
 namespace pre_seventeen_deadlock_example {
@@ -34,7 +34,7 @@ void deposit_and_check_balance();
 
 namespace livelock_example {
 void run_livelock_demo();
-void run_livelock_eternal_conversation();
+void run_livelock_eternal_conversation(); // WARN: runs forever
 } // namespace livelock_example
 
 int main() {
@@ -50,8 +50,8 @@ int main() {
     // pre_seventeen_deadlock_example::run_demo_using_defer();
     // pre_seventeen_deadlock_example::run_try_lock_demo();
     // bank_example::deposit_and_check_balance();
-    // livelock_example::run_livelock_demo();
-    livelock_example::run_livelock_eternal_conversation();
+    livelock_example::run_livelock_demo();
+    // livelock_example::run_livelock_eternal_conversation();
 
     return 0;
 } // namespace BankAccountint main()

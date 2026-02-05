@@ -23,7 +23,7 @@ void funcB() {
     std::print("Thread B has locked both mutexes\n");
 }
 
-/* TRUE LiveLock Example WARN:Runs Forever*/
+/* TRUE LiveLock Example Runs Forever*/
 void funcC() {
     std::this_thread::sleep_for(10ms);
     bool locked = false;
@@ -60,7 +60,7 @@ void run_livelock_demo() {
 }
 void run_livelock_eternal_conversation() {
     std::thread thrC(funcC);
-    std::this_thread::sleep_for(10ms);
+    std::this_thread::sleep_for(10ms); // Artificially creates the race condition
     std::thread thrD(funcD);
 
     thrC.join();
