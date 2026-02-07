@@ -47,6 +47,8 @@ set(SOURCES
     src/double_checked_example.cpp
     src/deadlock_example.cpp
     src/pre_seventeen_deadlock_example.cpp
+    src/bank_example.cpp
+    src/livelock_example.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

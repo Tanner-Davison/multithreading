@@ -1,5 +1,7 @@
-#include "RuntimeSpeed.hpp"
 #include <print>
+#include <thread>
+
+using namespace std::literals;
 
 namespace shared_mutex_example {
 void run_demo();
@@ -17,20 +19,27 @@ namespace double_checked_locking {
 void run_safer_call_once();
 void run_double_check_demo();
 } // namespace double_checked_locking
+
 namespace deadlock_example {
 void run_philosophers();
-void run_with_deadlock(); // WARN: running with deadlock will run forever
-
+void run_with_deadlock(); // WARN: runs forever
 } // namespace deadlock_example
-//
 namespace pre_seventeen_deadlock_example {
 void run_demo();
 void run_demo_using_defer();
 void run_try_lock_demo();
 } // namespace pre_seventeen_deadlock_example
 
+namespace bank_example {
+void deposit_and_check_balance();
+} // namespace bank_example
+
+namespace livelock_example {
+void run_livelock_demo();
+void run_livelock_eternal_conversation(); // WARN: runs forever
+} // namespace livelock_example
+
 int main() {
-    RuntimeSpeed::getProfiler("Main Thread");
     // thread_local_example::run_demo();
     // singleton_example::run_demo();
     // shared_mutex_example::run_demo();
@@ -42,6 +51,9 @@ int main() {
     // pre_seventeen_deadlock_example::run_demo();
     // pre_seventeen_deadlock_example::run_demo_using_defer();
     // pre_seventeen_deadlock_example::run_try_lock_demo();
+    // bank_example::deposit_and_check_balance();
+    // livelock_example::run_livelock_demo();
+    // livelock_example::run_livelock_eternal_conversation();
 
     return 0;
-}
+} // namespace BankAccountint main()
