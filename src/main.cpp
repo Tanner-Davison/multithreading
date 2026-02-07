@@ -1,5 +1,4 @@
 #include <print>
-#include <thread>
 
 using namespace std::literals;
 
