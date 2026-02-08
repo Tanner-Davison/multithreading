@@ -3,7 +3,7 @@
 #include <thread>
 #include <vector>
 
-namespace singleton_example {
+namespace singleton {
 namespace {
 int THREADS{5};
 }
@@ -24,4 +24,4 @@ void run_demo() {
     }
     std::println("Singleton Access Count: {}\n", Singleton::get_access_count());
 }
-} // namespace singleton_example
+} // namespace singleton

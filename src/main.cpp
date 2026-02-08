@@ -6,7 +6,7 @@ namespace shared_mutex_example {
 void run_demo();
 }
 
-namespace singleton_example {
+namespace singleton {
 void run_demo();
 }
 
@@ -45,7 +45,7 @@ void run_livelock_eternal_conversation(); // WARN: runs forever
 
 int main() {
     // thread_local_example::run_demo();
-    // singleton_example::run_demo();
+    singleton::run_demo();
     // shared_mutex_example::run_demo();
     // recursive_mutex_example::run_bad_factorial();
     // double_checked_locking::run_double_check_demo();
@@ -58,6 +58,5 @@ int main() {
     // bank_example::deposit_and_check_balance();
     // livelock_example::run_livelock_demo();
     // livelock_example::run_livelock_eternal_conversation();
-
     return 0;
 } // namespace BankAccountint main()

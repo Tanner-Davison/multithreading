@@ -42,7 +42,7 @@ set(SOURCES
     src/Vector.cpp
     src/bad_factorial.cpp
     src/shared_mutex_example.cpp
-    src/singleton_example.cpp
+    src/Singleton.cpp
     src/thread_local_example.cpp
     src/double_checked_example.cpp
     src/deadlock_example.cpp
