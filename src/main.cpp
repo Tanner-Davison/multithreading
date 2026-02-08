@@ -1,3 +1,4 @@
+#include "RuntimeSpeed.hpp"
 #include <print>
 
 using namespace std::literals;
@@ -48,8 +49,9 @@ void run_demo();
 } // namespace thread_coordination
 
 int main() {
+    RuntimeSpeed::getProfiler();
     // thread_local_example::run_demo();
-    singleton::run_demo();
+    // singleton::run_demo();
     // shared_mutex_example::run_demo();
     // recursive_mutex_example::run_bad_factorial();
     // double_checked_locking::run_double_check_demo();
