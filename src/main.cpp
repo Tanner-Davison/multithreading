@@ -43,6 +43,10 @@ void run_livelock_demo();
 void run_livelock_eternal_conversation(); // WARN: runs forever
 } // namespace livelock_example
 
+namespace thread_coordination {
+void run_demo();
+} // namespace thread_coordination
+
 int main() {
     // thread_local_example::run_demo();
     singleton::run_demo();
@@ -58,5 +62,6 @@ int main() {
     // bank_example::deposit_and_check_balance();
     // livelock_example::run_livelock_demo();
     // livelock_example::run_livelock_eternal_conversation();
+    thread_coordination::run_demo();
     return 0;
 } // namespace BankAccountint main()

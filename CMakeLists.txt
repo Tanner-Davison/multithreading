@@ -49,6 +49,7 @@ set(SOURCES
     src/pre_seventeen_deadlock_example.cpp
     src/bank_example.cpp
     src/livelock_example.cpp
+    src/thread_coordination.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
