@@ -20,8 +20,8 @@ void fetch_data() {
         std::this_thread::sleep_for(2s);
         // Update data, then notiy the progress bar thread
         std::lock_guard<std::mutex> data_lock(data_mutex);
-        sdata += "🇮🇴" + std::to_string(i + 1);
-        std::print("sdata: {}", sdata);
+        sdata += "  ";
+        std::println("sdata: {}", sdata);
         update_progress = true;
     }
     std::print("Fetch sdata has ended\n");
