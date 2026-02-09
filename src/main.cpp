@@ -1,4 +1,4 @@
-#include "RuntimeSpeed.hpp"
+#include <RuntimeSpeed.hpp>
 #include <print>
 
 using namespace std::literals;
