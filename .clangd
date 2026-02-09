@@ -2,4 +2,4 @@ CompileFlags:
   Add:
     - "-I${workspaceFolder}/include"
 Index:
-  Background: true
+  Background: Build
