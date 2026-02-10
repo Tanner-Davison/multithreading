@@ -37,6 +37,7 @@ void fetch_data() {
     std::lock_guard<std::mutex> completed_lock(completed_mutex);
     completed = true;
 }
+
 // Progress bar thread
 void progress_bar() {
     size_t len = 0;
@@ -69,6 +70,7 @@ void progress_bar() {
         }
     }
 }
+
 // Processing thread
 void process_data() {
     std::print("\033[3;1H\033[KProcessing thread waiting for data...");
