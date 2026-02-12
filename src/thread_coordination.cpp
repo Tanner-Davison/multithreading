@@ -1,3 +1,47 @@
+/* This program demonstrates how to use std::mutex to coordinate
+ * threads. The program has three threads:
+ * 1. Data fetching thread
+ * 2. Progress bar thread
+ * 3. Processing thread
+ *
+ * The data fetching thread fetches data from a remote server and
+ * updates the progress bar thread with the new data. The progress bar
+ * thread displays the data fetched by the data fetching thread.
+ * Finally, the processing thread processes the data fetched by the
+ * data fetching thread.
+ *
+ * The program uses std::mutex to coordinate the threads. The mutexes
+ * are used to protect the shared data and to notify the threads when
+ * there is new data to display.
+ *
+ * The program uses ANSI escape codes to move the cursor and clear the
+ * screen. The ANSI escape codes are used to position the cursor and
+ * clear the screen.
+ *
+ * The program uses std::print and std::println to print the output.
+ * The std::print and std::println functions are part of the C++
+ * standard library and are used to print formatted output to the
+ * console.
+ *
+ * The program uses std::flush to ensure that the output is immediately
+ * displayed to the console.
+ *
+ * The program uses std::this_thread::sleep_for to introduce a delay
+ * between the threads
+
+*/
+
+/* Final Output:
+*
+* Fetch sdata has ended
+* Progress bar thread has ended
+* Processing sdata:  (completed) 100%
+* Downloaded: 27 bytes.
+
+
+
+Execution Total time: 5007ms */
+
 #include <iostream>
 #include <mutex>
 #include <print>
