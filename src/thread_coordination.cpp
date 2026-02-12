@@ -4,14 +4,14 @@
 #include <string>
 #include <thread>
 using namespace std::literals;
+
 namespace thread_coordination {
 namespace {
 std::string sdata;
 bool        update_progress{false};
 bool        completed{false};
-
-std::mutex data_mutex;
-std::mutex completed_mutex;
+std::mutex  data_mutex;
+std::mutex  completed_mutex;
 
 // Data  fetching Thread
 void fetch_data() {
@@ -51,7 +51,7 @@ void progress_bar() {
             std::cout << std::flush;
 
             data_lock.unlock();
-            std::this_thread::sleep_for(500ms);
+            std::this_thread::sleep_for(250ms);
             data_lock.lock();
         }
         // wake up and use the new value
