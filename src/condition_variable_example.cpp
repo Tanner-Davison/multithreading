@@ -5,6 +5,7 @@
 #include <thread>
 #include <vector>
 using namespace std::literals;
+
 namespace condition_variable_example {
 namespace {
 std::mutex              mtx;
@@ -38,7 +39,7 @@ void writer(int id) {
         sdata = "Populated.";
         ready = true;
     }
-    std::print("\033[{};1H\033[KWriter {} notifying all readers", line, id);
+    std::print("\033[{};1H\033[KWriter {} Notified all readers", line, id);
     std::cout << std::flush;
     cv.notify_all();
 }
