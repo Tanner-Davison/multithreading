@@ -9,13 +9,14 @@ namespace {
 std::string sdata;
 bool        update_progress{false};
 bool        completed{false};
-std::mutex  data_mutex;
-std::mutex  completed_mutex;
+
+std::mutex data_mutex;
+std::mutex completed_mutex;
 
 // Data  fetching Thread
 void fetch_data() {
     for (int i = 0; i < 10; ++i) {
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(500ms);
         // Update data, then notify the progress bar thread
         std::lock_guard<std::mutex> data_lock(data_mutex);
         if (i == 0) {
@@ -49,7 +50,7 @@ void progress_bar() {
             std::cout << std::flush;
 
             data_lock.unlock();
-            std::this_thread::sleep_for(10ms);
+            std::this_thread::sleep_for(500ms);
             data_lock.lock();
         }
         // wake up and use the new value
@@ -77,10 +78,11 @@ void process_data() {
     std::unique_lock<std::mutex> completed_lock(completed_mutex);
     while (!completed) {
         completed_lock.unlock();
-        std::this_thread::sleep_for(10ms);
+        std::this_thread::sleep_for(500ms);
         completed_lock.lock();
     }
     completed_lock.unlock();
+
     std::lock_guard<std::mutex> data_lock(data_mutex);
     std::print("\033[3;1H\033[KProcessing sdata: {}", sdata);
     std::cout << std::flush;
