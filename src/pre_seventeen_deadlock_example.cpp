@@ -21,14 +21,17 @@ void taskB() {
     std::unique_lock<std::mutex> lock2(mtx2, std::adopt_lock);
     std::println("Thread B Took ownership of lock 1 and 2\nB is unlocking.");
 }
+
 void deferTaskA() {
     std::println("doing some prep work for 50ms...");
-
     std::this_thread::sleep_for(50ms);
+
     std::unique_lock<std::mutex> lock(mtx1, std::defer_lock);
     std::unique_lock<std::mutex> lock2(mtx2, std::defer_lock);
+
     std::println("A is now attempting deffered locking");
     std::lock(lock, lock2); // passing the unique lock (lock)
+
     std::println("Thread A Took ownership of lock 1 and 2\nA is Unlocking ");
 }
 void deferTaskB() {
@@ -40,6 +43,7 @@ void deferTaskB() {
     std::lock(lock, lock2); // passing the unique lock (lock)
     std::println("Thread B Took ownership of lock 1 and 2\nB is Unlocking ");
 }
+
 void tryLockTaskA() {
     std::unique_lock<std::mutex> uniq_lk1(mtx1, std::defer_lock);
     std::unique_lock<std::mutex> uniq_lk2(mtx2, std::defer_lock);
