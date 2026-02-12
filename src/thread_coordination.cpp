@@ -30,7 +30,6 @@
  * between the threads
 
 */
-
 /* Final Output:
 *
 * Fetch sdata has ended
