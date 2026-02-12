@@ -50,6 +50,7 @@ set(SOURCES
     src/bank_example.cpp
     src/livelock_example.cpp
     src/thread_coordination.cpp
+    src/condition_variable_example.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

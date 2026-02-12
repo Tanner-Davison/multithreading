@@ -38,6 +38,9 @@ void run_livelock_eternal_conversation(); // WARN: runs forever
 namespace thread_coordination {
 void run_demo();
 } // namespace thread_coordination
+namespace condition_variable_example {
+void run_demo();
+}
 
 int main() {
     RuntimeSpeed::getProfiler();
@@ -55,6 +58,7 @@ int main() {
     // bank_example::deposit_and_check_balance();
     // livelock_example::run_livelock_demo();
     // livelock_example::run_livelock_eternal_conversation();
-    thread_coordination::run_demo();
+    // thread_coordination::run_demo();
+    condition_variable_example::run_demo();
     return 0;
 } // namespace BankAccountint main()
