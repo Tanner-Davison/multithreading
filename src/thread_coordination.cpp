@@ -50,13 +50,13 @@ using namespace std::literals;
 
 namespace thread_coordination {
 namespace {
+
 std::string sdata;
-bool        update_progress{false};
-bool        completed{false};
 std::mutex  data_mutex;
 std::mutex  completed_mutex;
+bool        update_progress{false};
+bool        completed{false};
 
-// Data  fetching Thread
 void fetch_data() {
     for (int i = 0; i < 10; ++i) {
         std::this_thread::sleep_for(500ms);

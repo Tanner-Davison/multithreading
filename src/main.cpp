@@ -41,7 +41,9 @@ void run_demo();
 namespace condition_variable_example {
 void run_demo();
 }
-
+namespace condition_variable_practical {
+void run_demo();
+}
 int main() {
     RuntimeSpeed::getProfiler();
     // thread_local_example::run_demo();
@@ -59,6 +61,7 @@ int main() {
     // livelock_example::run_livelock_demo();
     // livelock_example::run_livelock_eternal_conversation();
     // thread_coordination::run_demo();
-    condition_variable_example::run_demo();
+    // condition_variable_example::run_demo();
+    condition_variable_practical::run_demo();
     return 0;
 } // namespace BankAccountint main()

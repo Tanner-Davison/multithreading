@@ -51,6 +51,7 @@ set(SOURCES
     src/livelock_example.cpp
     src/thread_coordination.cpp
     src/condition_variable_example.cpp
+    src/condition_variable_practical.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
