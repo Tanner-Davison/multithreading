@@ -1,6 +1,7 @@
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
+#include <print>
 #include <string>
 #include <thread>
 
@@ -9,8 +10,9 @@ using namespace std::literals;
 namespace condition_variable_practical {
 namespace {
 
-bool       update_progress{false};
-bool       completed{false};
+bool update_progress{false};
+bool completed{false};
+
 std::mutex data_mtx;
 std::mutex completed_mtx;
 
@@ -48,10 +50,10 @@ void data_fetcher() {
 void progress_bar() {
     size_t len = 0;
     while (true) {
-        std::print("\033[2;1H\033[KFetching data...");
         std::unique_lock<std::mutex> data_lock(data_mtx);
         data_cv.wait(data_lock, [&] { return update_progress; });
-        len             = sdata.size();
+        len = sdata.size();
+        std::print("\033[2;1H\033[KFetching data...");
         update_progress = false;
         data_lock.unlock();
         std::print("\033[3;1H\033[K{}", sdata);
