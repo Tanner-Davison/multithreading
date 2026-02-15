@@ -44,6 +44,9 @@ void run_demo();
 namespace condition_variable_practical {
 void run_demo();
 }
+namespace future_and_promise_example {
+void run_demo();
+}
 int main() {
     RuntimeSpeed::getProfiler();
     // thread_local_example::run_demo();
