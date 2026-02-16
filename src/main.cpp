@@ -1,6 +1,4 @@
-#include "Logger.hpp"
 #include <RuntimeSpeed.hpp>
-#include <future>
 #include <print>
 
 using namespace std::literals;
@@ -49,28 +47,9 @@ void run_demo();
 namespace future_and_promise {
 void run_demo();
 }
+
 int main() {
-    RuntimeSpeed::getProfiler();
-    // Logger::get_logger().log("Starting...");
-    // Logger::get_logger().log("Ending...");
-    // Logger::get_logger().read_latest_log();
-    // thread_local_example::run_demo();
-    // singleton::run_demo();
-    // shared_mutex_example::run_demo();
-    // recursive_mutex_example::run_bad_factorial();
-    // double_checked_locking::run_double_check_demo();
-    // double_checked_locking::run_double_check_demo();
-    // deadlock_example::run_philosophers();
-    // deadlock_example::run_with_deadlock();
-    // pre_seventeen_deadlock_example::run_demo();
-    // pre_seventeen_deadlock_example::run_demo_using_defer();
-    // pre_seventeen_deadlock_example::run_try_lock_demo();
-    // bank_example::deposit_and_check_balance();
-    // livelock_example::run_livelock_demo();
-    // livelock_example::run_livelock_eternal_conversation();
-    // thread_coordination::run_demo();
-    // condition_variable_example::run_demo();
-    // condition_variable_practical::run_demo();
+    // RuntimeSpeed::getProfiler();
     future_and_promise::run_demo();
     return 0;
-} // namespace BankAccountint main()
+}
