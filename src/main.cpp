@@ -49,7 +49,7 @@ void run_demo();
 }
 
 int main() {
-    // RuntimeSpeed::getProfiler();
+    RuntimeSpeed::getProfiler();
     future_and_promise::run_demo();
     return 0;
 }
