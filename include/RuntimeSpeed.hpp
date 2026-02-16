@@ -53,7 +53,7 @@ class RuntimeSpeed {
     ~RuntimeSpeed() {
         auto end      = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        std::println("{} Total time: {}ms", label, duration.count());
+        std::println("\n{} Total time: {}ms", label, duration.count());
     }
 
     auto elapsed_time() const {
