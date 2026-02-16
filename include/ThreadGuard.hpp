@@ -2,9 +2,14 @@
 #include <iostream>
 #include <thread>
 /*
- * Greate project to Write once but essentially just use jthread if you are able to write in c++20
- * or later
- * */
+ * LEARNING EXERCISE: Hand-rolled RAII thread guard.
+ *
+ * This is essentially what std::jthread (C++20) does for you automatically.
+ * std::jthread also supports cooperative cancellation via std::stop_token.
+ *
+ * Since this project uses C++23, prefer std::jthread in real code.
+ * Keeping this as a reference for understanding RAII thread lifetime management.
+ */
 class ThreadGuard {
     std::thread thr;
 

@@ -51,7 +51,6 @@ set(SOURCES
     src/thread_coordination.cpp
     src/condition_variable_example.cpp
     src/condition_variable_practical.cpp
-    src/future_and_promise.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

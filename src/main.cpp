@@ -1,3 +1,4 @@
+#include "Logger.hpp"
 #include <RuntimeSpeed.hpp>
 #include <print>
 
@@ -44,11 +45,10 @@ void run_demo();
 namespace condition_variable_practical {
 void run_demo();
 }
-namespace future_and_promise_example {
-void run_demo();
-}
 int main() {
     RuntimeSpeed::getProfiler();
+    // Logger::get_logger().log("Starting...");
+    // Logger::get_logger().read_all_logs();
     // thread_local_example::run_demo();
     // singleton::run_demo();
     // shared_mutex_example::run_demo();
@@ -65,6 +65,6 @@ int main() {
     // livelock_example::run_livelock_eternal_conversation();
     // thread_coordination::run_demo();
     // condition_variable_example::run_demo();
-    condition_variable_practical::run_demo();
+    // condition_variable_practical::run_demo();
     return 0;
 } // namespace BankAccountint main()
