@@ -8,8 +8,11 @@ namespace future_and_promise {
 namespace {
 void producer(std::promise<int>& px) {
     std::this_thread::sleep_for(2s);
-    int x = 42;
     try {
+        int x = 42;
+        if (0) { // change to 1 to throw Oops!
+            throw std::out_of_range("Oops!");
+        }
         px.set_value(x);
     } catch (...) {
         px.set_exception(std::current_exception());
