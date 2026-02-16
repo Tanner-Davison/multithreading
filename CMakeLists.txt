@@ -39,7 +39,6 @@ endif()
 set(SOURCES
     src/main.cpp
     src/ThreadGuard.cpp
-    src/Vector.cpp
     src/bad_factorial.cpp
     src/shared_mutex_example.cpp
     src/Singleton.cpp
