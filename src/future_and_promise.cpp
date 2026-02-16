@@ -10,9 +10,11 @@ void producer(std::promise<int>& px) {
     std::this_thread::sleep_for(2s);
     try {
         int x = 42;
-        if (0) { // change to 1 to throw Oops!
-            throw std::out_of_range("Oops!");
-        }
+        // Exception demo:
+        /* if (1) { // change to 1 to throw OOops!
+            px.set_exception(std::make_exception_ptr(std::out_of_range("OOoops!")));
+            return;
+        } */
         px.set_value(x);
     } catch (...) {
         px.set_exception(std::current_exception());
