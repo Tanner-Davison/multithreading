@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(multithreading 
+project(multithreaded-examples 
         VERSION 1.0
-        DESCRIPTION "Multithreading Examples"
+        DESCRIPTION "Multithreaded Examples"
         LANGUAGES CXX)
 
 # Use ccache if available (works on both macOS and WSL)
