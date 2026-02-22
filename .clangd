@@ -1,5 +1,5 @@
 CompileFlags:
   Add:
-    - "-I${workspaceFolder}/include"
+    - "-I./include"
 Index:
   Background: true
