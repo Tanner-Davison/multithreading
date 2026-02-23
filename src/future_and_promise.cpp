@@ -1,4 +1,5 @@
 #include <exception>
+#include <functional>
 #include <future>
 #include <print>
 #include <thread>
