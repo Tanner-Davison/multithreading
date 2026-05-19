@@ -1,11 +1,14 @@
 // copyright 2026 Tanner Davison
+//
 #include "RuntimeSpeed.hpp"
 #include <print>
-using namespace std::literals;
-namespace shared_mutex_example {
 
+using namespace std::literals;
+
+namespace shared_mutex_example {
 void run_demo();
 }
+
 namespace singleton {
 void run_demo();
 }
